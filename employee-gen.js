@@ -1,10 +1,13 @@
 
     const fs = require("fs")
     const Employee = require("./lib/Employee.js")
+    const Engineer = require("./lib/Engineer.js")
+    const Manager = require("./lib/Manager.js")
+    const Intern = require("./lib/Intern.js")
     
     const inquirer = require("inquirer")
     
-
+    const teamMembers = []
     function profileGen(params) {
         
     console.log("please answer all required fields")
@@ -41,12 +44,35 @@
         },
     
     ]).then (function (answer) {
-   
+        if (answer.role === "Engineer") {
+            const newEngineer = new Engineer (answer.name, answer.id, answer.email) //add answer.github later
+            teamMembers.push(newEngineer)
+            console.log(teamMembers)
+        
+        } else if (answer.role === "Manager"){
+            const newManager = new Manager (answer.name, answer.id, answer.email)
+            teamMembers.push(newManager)
+        }
+
+         else if (answer.role === "Intern"){
+            const newIntern = new Intern (answer.name, answer.id, answer.email)
+            teamMembers.push(newIntern)
+        };
+
+    if (answer.response === "yes"){
+        return profileGen()
+    }else{
+        genEngineer();
+    }
     console.log("Generator complete. Thank you!")
-    const newWorker = new Employee (answer.name, answer.id, answer.email, answer.response)
+    })
+    }
     
     
-    let html = `
+    
+    
+     function generator (){
+         let html = `
         <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -60,11 +86,11 @@
     
     <div class="card" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title">${newWorker.name}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">${newWorker.role}</h6>
-        <h6 class="card-subtitle mb-2 text-muted">${newWorker.id}</h6>
+        <h5 class="card-title">${teamMembers[0].name}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">${teamMembers[0].role}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">${teamMembers[0].id}</h6>
     
-        <a href="mailto: ${newWorker.email}" class="card-link"> Email: ${newWorker.email}</a>
+        <a href="mailto: ${teamMembers[0].email}" class="card-link"> Email: ${teamMembers[0].email}</a>
        
       </div>
     </div>
@@ -73,16 +99,14 @@
     </body>
     </html>
     `
-     
-     fs.writeFile("./templates/employee.html", html, function (err) {
+     fs.appendFile("./templates/employee.html", html, function (err) {
         
-     })
-    
-        }
-    )
-    
-    }
-    
+     })  
+     }
     profileGen();
+    
+    
+    
+ 
     
     
