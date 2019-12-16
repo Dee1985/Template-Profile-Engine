@@ -1,11 +1,12 @@
 
+
     const fs = require("fs")
     const Employee = require("./lib/Employee.js")
     const Engineer = require("./lib/Engineer.js")
     const Manager = require("./lib/Manager.js")
     const Intern = require("./lib/Intern.js")
     
-    const inquirer = require("inquirer")
+    const inquirer= require("inquirer")
     
     const teamMembers = []
     function profileGen(params) {
@@ -62,7 +63,7 @@
     if (answer.response === "yes"){
         return profileGen()
     }else{
-        genEngineer();
+         generator();
     }
     console.log("Generator complete. Thank you!")
     })
@@ -99,8 +100,10 @@
     </body>
     </html>
     `
-     fs.appendFile("./templates/employee.html", html, function (err) {
-        
+     fs.writeFile("./templates/employee-test.html", html, function (err) {
+         console.log("@#&$%@#&$%&#@$%&#@$%&#@$%&#@$%%$%&#%@$&^%#@$&^#@%$&@#%$&#@$%&#@$%&@#$%&#@$%&#@%$&#@$%&@$%&#@$%")
+        if (err) throw err;
+        console.log("success")
      })  
      }
     profileGen();
