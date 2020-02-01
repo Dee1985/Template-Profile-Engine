@@ -34,7 +34,7 @@ const askQ = function(answer) {
       }
     ])
     .then(function(answer) {
-      console.log(answer);
+      // console.log(answer);
       if (answer.role === "Manager") {
         askMangerQs(answer);
       } else if (answer.role === "Engineer") {
@@ -69,7 +69,7 @@ function askMangerQs(firstAnswers) {
         answer.officeNumber
       );
       teamRoster.push(newManager);
-      console.log(newManager);
+      // console.log(newManager);
       if (answer.response === "yes") {
         askQ();
       } else {
@@ -102,8 +102,8 @@ function askEngineerQs(firstAnswers1) {
         answer.github
       );
       teamRoster.push(newEngineer);
-      console.log(newEngineer);
-      console.log(teamRoster);
+      // console.log(newEngineer);
+      // console.log(teamRoster);
       if (answer.response === "yes") {
         askQ();
       } else {
@@ -136,7 +136,7 @@ function askInternQs(firstAnswers2) {
         answer.school
       );
       teamRoster.push(newIntern);
-      console.log(newIntern);
+      // console.log(newIntern);
       if (answer.response === "yes") {
         askQ();
       } else {
@@ -147,7 +147,7 @@ function askInternQs(firstAnswers2) {
 }
 
 function generator(htmlName) {
-  console.log(teamRoster);
+  // console.log(teamRoster);
   let internCard = function(intern) {
     // console.log("about to make intern", intern);
     return `
