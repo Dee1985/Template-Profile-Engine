@@ -5,7 +5,8 @@ const Engineer = require("./lib/Engineer.js");
 const Manager = require("./lib/Manager.js");
 const Intern = require("./lib/Intern.js");
 
-const teamRoster = [];
+let teamRoster = [];
+let cardToDisplay = [];
 
 const askQ = function(answer) {
   inquirer
@@ -64,16 +65,15 @@ function askMangerQs(firstAnswers) {
       let newManager = new Manager(
         firstAnswers.name,
         firstAnswers.id,
-        firstAnswers.role,
         firstAnswers.email,
-        firstAnswers.officeNumber
+        answer.officeNumber
       );
       teamRoster.push(newManager);
       console.log(newManager);
       if (answer.response === "yes") {
-        askQ(answer);
+        askQ();
       } else {
-        generator("manager.html");
+        generator("profile.html");
         return console.log("Generator complete.");
       }
     });
@@ -98,16 +98,16 @@ function askEngineerQs(firstAnswers1) {
       let newEngineer = new Engineer(
         firstAnswers1.name,
         firstAnswers1.id,
-        firstAnswers1.role,
         firstAnswers1.email,
-        firstAnswers1.github
+        answer.github
       );
       teamRoster.push(newEngineer);
       console.log(newEngineer);
+      console.log(teamRoster);
       if (answer.response === "yes") {
-        askQ(answer);
+        askQ();
       } else {
-        generator("engineer.html");
+        generator("profile.html");
         return console.log("Generator complete.");
       }
     });
@@ -132,16 +132,15 @@ function askInternQs(firstAnswers2) {
       let newIntern = new Intern(
         firstAnswers2.name,
         firstAnswers2.id,
-        firstAnswers2.role,
         firstAnswers2.email,
-        firstAnswers2.school
+        answer.school
       );
       teamRoster.push(newIntern);
       console.log(newIntern);
       if (answer.response === "yes") {
-        askQ(answer);
+        askQ();
       } else {
-        generator("intern.html");
+        generator("profile.html");
         return console.log("Generator Complete.");
       }
     });
@@ -194,19 +193,17 @@ function generator(htmlName) {
     `;
   };
 
-  let cardToDisplay = [];
-
   for (let i = 0; i < teamRoster.length; i++) {
-    if (htmlName === "intern.html") {
+    if (teamRoster[i].role === "Intern") {
       cardToDisplay.push(internCard(teamRoster[i]));
-    } else if (htmlName === "manager.html") {
+    } else if (teamRoster[i].role === "Manager") {
       cardToDisplay.push(managerCard(teamRoster[i]));
-    } else {
+    } else if (teamRoster[i].role === "Engineer") {
       cardToDisplay.push(engineerCard(teamRoster[i]));
     }
   }
 
-  // console.log("$$$$$$", cardToDisplay);
+  console.log("$$$$$$", cardToDisplay);
 
   let html = `
         <!DOCTYPE html>
@@ -220,7 +217,6 @@ function generator(htmlName) {
     </head>
     <body>
      ${cardToDisplay}
-
     </body>
     </html>
     `;
