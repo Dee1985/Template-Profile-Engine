@@ -1,0 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+div.card-body {
+  box-shadow: 4px 3px 7px 2px #00000040;
+}

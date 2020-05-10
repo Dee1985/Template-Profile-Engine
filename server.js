@@ -8,32 +8,32 @@ const Intern = require("./lib/Intern.js");
 let teamRoster = [];
 let cardToDisplay = [];
 
-const askQ = function(answer) {
+const askQ = function (answer) {
   inquirer
     .prompt([
       {
         type: "input",
         message: "enter employee name",
-        name: "name"
+        name: "name",
       },
       {
         type: "input",
         message: "enter employee id",
-        name: "id"
+        name: "id",
       },
       {
         type: "input",
         message: "enter employee email",
-        name: "email"
+        name: "email",
       },
       {
         type: "list",
         name: "role",
         message: "select employee role",
-        choices: ["Manager", "Engineer", "Intern"]
-      }
+        choices: ["Manager", "Engineer", "Intern"],
+      },
     ])
-    .then(function(answer) {
+    .then(function (answer) {
       // console.log(answer);
       if (answer.role === "Manager") {
         askMangerQs(answer);
@@ -52,16 +52,16 @@ function askMangerQs(firstAnswers) {
       {
         type: "input",
         message: "enter manager telephone number",
-        name: "officeNumber"
+        name: "officeNumber",
       },
       {
         type: "list",
         name: "response",
         message: "Would you like to add any other team members?",
-        choices: ["yes", "no"]
-      }
+        choices: ["yes", "no"],
+      },
     ])
-    .then(function(answer) {
+    .then(function (answer) {
       let newManager = new Manager(
         firstAnswers.name,
         firstAnswers.id,
@@ -85,16 +85,16 @@ function askEngineerQs(firstAnswers1) {
       {
         type: "input",
         message: "enter engineer github username",
-        name: "github"
+        name: "github",
       },
       {
         type: "list",
         name: "response",
         message: "Would you like to add any other team members?",
-        choices: ["yes", "no"]
-      }
+        choices: ["yes", "no"],
+      },
     ])
-    .then(function(answer) {
+    .then(function (answer) {
       let newEngineer = new Engineer(
         firstAnswers1.name,
         firstAnswers1.id,
@@ -119,16 +119,16 @@ function askInternQs(firstAnswers2) {
       {
         type: "input",
         message: "enter Intern school name",
-        name: "school"
+        name: "school",
       },
       {
         type: "list",
         name: "response",
         message: "Would you like to add any other team members?",
-        choices: ["yes", "no"]
-      }
+        choices: ["yes", "no"],
+      },
     ])
-    .then(function(answer) {
+    .then(function (answer) {
       let newIntern = new Intern(
         firstAnswers2.name,
         firstAnswers2.id,
@@ -148,13 +148,14 @@ function askInternQs(firstAnswers2) {
 
 function generator(htmlName) {
   // console.log(teamRoster);
-  let internCard = function(intern) {
+  let internCard = function (intern) {
     // console.log("about to make intern", intern);
     return `
       <div class="card" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title">${intern.name}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">${intern.id}</h6>
+        <h5 class="card-header">${intern.name}</h5>
+        <br/>
+        <h6 class="card-subtitle mb-2 text-muted">ID: ${intern.id}</h6>
         <h6 class="card-subtitle mb-2 text-muted">${intern.role}</h6>
         <h6 class="card-subtitle mb-2 text-muted">${intern.school}</h6>
         <a href="mailto: ${intern.email}" class="card-link"> Email: ${intern.email}</a>
@@ -163,13 +164,14 @@ function generator(htmlName) {
     `;
   };
 
-  let managerCard = function(manager) {
+  let managerCard = function (manager) {
     // console.log("about to make Manager", manager);
     return `
       <div class="card" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title">${manager.name}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">${manager.id}</h6>
+        <h5 class="card-header">${manager.name}</h5>
+        <br/>
+        <h6 class="card-subtitle mb-2 text-muted">ID: ${manager.id}</h6>
         <h6 class="card-subtitle mb-2 text-muted">${manager.role}</h6>
         <h6 class="card-subtitle mb-2 text-muted">${manager.officeNumber}</h6>
         <a href="mailto: ${manager.email}" class="card-link"> Email: ${manager.email}</a>
@@ -178,13 +180,14 @@ function generator(htmlName) {
     `;
   };
 
-  let engineerCard = function(engineer) {
+  let engineerCard = function (engineer) {
     // console.log("about to make Engineer", engineer);
     return `
       <div class="card" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title">${engineer.name}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">${engineer.id}</h6>
+        <h5 class="card-header">${engineer.name}</h5>
+        <br/>
+        <h6 class="card-subtitle mb-2 text-muted">ID: ${engineer.id}</h6>
         <h6 class="card-subtitle mb-2 text-muted">${engineer.role}</h6>
         <h6 class="card-subtitle mb-2 text-muted">${engineer.github}</h6>
         <a href="mailto: ${engineer.email}" class="card-link"> Email: ${engineer.email}</a>
@@ -203,7 +206,7 @@ function generator(htmlName) {
     }
   }
 
-  console.log("$$$$$$", cardToDisplay);
+  // console.log("$$$$$$", cardToDisplay);
 
   let html = `
         <!DOCTYPE html>
@@ -214,13 +217,14 @@ function generator(htmlName) {
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
      ${cardToDisplay}
     </body>
     </html>
     `;
-  fs.writeFile(htmlName, html, function(err) {
+  fs.writeFile(htmlName, html, function (err) {
     if (err) throw err;
     console.log("success");
   });
